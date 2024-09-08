@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Semslink Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .header {
+            background-color: #5d7b9d;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .menu {
+            display: flex;
+            gap: 20px;
+        }
+        .menu span {
+            cursor: pointer;
+        }
+        .content {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #5d7b9d;
+            color: white;
+            padding: 20px;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar.collapsed {
+            width: 60px;
+            padding: 20px 0;
+        }
+        .sidebar-toggle {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #4a6278;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .sidebar-content {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .sidebar.collapsed .sidebar-content {
+            display: none;
+        }
+        .main {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: white;
+            overflow-y: auto;
+        }
+        .leave-section {
+            display: flex;
+            gap: 20px;
+        }
+        .leave-column {
+            flex: 1;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .chart {
+            width: 48%;
+            height: 200px;
+            background-color: #f2f2f2;
+        }
+        .apply-leave {
+            background-color: #5d7b9d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .leave-info {
+            background-color: #f2f2f2;
+            padding: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">semslink</div>
+        <div class="menu">
+            <span onclick="changePage('leave')">Leave & Attendance</span>
+            <span onclick="changePage('info')">My Information</span>
+            <span onclick="changePage('hiring')">Hiring</span>
+        </div>
+        <div>
+            <select>
+                <option>2023</option>                <option>2024</option>                <option>2025</option>
+            </select>
+            <img src="" alt="UserPics" />
+        </div>
+    </div>
+    <div class="content">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-toggle" onclick="toggleSidebar()">☰</div>
+            <div class="sidebar-content">
+                <div>Me</div>
+                <div>Only Leave No Attendance</div>
+            </div>
+        </div>
+        <div class="main" id="main-content">
+            <!-- Content will be dynamically inserted here -->
+        </div>
+    </div>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        function changePage(page) {
+            const mainContent = document.getElementById('main-content');
+            let content = '';
+
+            switch(page) {
+                case 'leave':
+                    content = `
+                        <h2>Leave & Attendance</h2>
+                        <div class="leave-section">
+                            <div class="leave-column">
+                                <h3>Leaves yet to be approved</h3>
+                                <table>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Leave Type</th>
+                                        <th>From date</th>
+                                        <th>To date</th>
+                                        <th>Days</th>
+                                        <th>Applied On</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Work From Home</td>
+                                        <td>03-Sep-2024</td>
+                                        <td>03-Sep-2024</td>
+                                        <td>1</td>
+                                        <td>06-Sep-2024</td>
+                                        <td>Edit Delete</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="leave-column">
+                                <h3>Apply Leave</h3>
+                                <div class="leave-info">
+                                    <p>*Short leave availed count: 0</p>
+                                    <p><a href="#">Leave rules</a></p>
+                                    <h3>Everyday is a paid leave</h3>
+                                    <h4>Paid Leave</h4>
+                                    <p>Balance: 365</p>
+                                    <p>Applied Count: 0</p>
+                                    <p>Leave Availed: 0</p>
+                                </div>
+                                <button class="apply-leave">Apply leave</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart">
+                                <h3>Monthly leave pattern</h3>
+                                <!-- Placeholder for monthly leave pattern chart -->
+                            </div>
+                            <div class="chart">
+                                <h3>Consumed leaves</h3>
+                                <!-- Placeholder for consumed leaves chart -->
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'info':
+                    content = `
+                        <h2>My Information</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    `;
+                    break;
+                case 'hiring':
+                    content = `
+                        <h2>Hiring</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    `;
+                    break;
+                default:
+                    content = '<h2>Page not found</h2>';
+            }
+
+            mainContent.innerHTML = content;
+        }
+
+        // Load the Leave & Attendance page by default
+        changePage('leave');
+    </script>
+</body>
+</html>
